@@ -1,25 +1,23 @@
 node {
     stage('Build') {
-        agent {
-            docker {
-                image 'node:16-buster-slim' 
-                args '-p 3000:3000' 
-            }
-        }
         steps {
-            withNPM(npmrcConfig: 'my-custom-nprc') {
+            try {
                 sh "npm install"
                 sh "npm i"
                 echo "finished build process."
+            } catch (exc) {
+                echo 'Something failed.'
             }
         }
     }
     stage('Test') {
-        try {
-            sh './jenkins/scripts/test.sh'
-            echo "finished test process."
-        } catch (exc) {
-            echo 'Something failed!'
+        steps {
+            try {
+                sh './jenkins/scripts/test.sh'
+                echo "finished test process."
+            } catch (exc) {
+                echo 'Something failed.'
+            }
         }
     }
 }
