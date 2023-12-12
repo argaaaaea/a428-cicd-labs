@@ -1,23 +1,15 @@
-pipeline {
-    agent {
-        docker {
-            image 'node:16-buster-slim' 
-            args '-p 3000:3000' 
+node {
+    stage('Build') {
+        if (env.BRANCH_NAME == 'react-app') {
+            sh "npm install"
+            sh "npm i"
+            echo "finished build process."
         }
     }
-    node {
-        stage('Build') {
-            if (env.BRANCH_NAME == 'react-app') {
-                sh "npm install"
-                sh "npm i"
-                echo "finished build process."
-            }
-        }
-        stage('Test') {
-            if (env.BRANCH_NAME == 'react-app') {
-                sh './jenkins/scripts/test.sh'
-                echo "finished test process."
-            }
+    stage('Test') {
+        if (env.BRANCH_NAME == 'react-app') {
+            sh './jenkins/scripts/test.sh'
+            echo "finished test process."
         }
     }
 }
