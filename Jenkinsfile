@@ -1,11 +1,11 @@
 node {
-    stage('Dependencies') {
-        docker {
-            image 'node:16-buster-slim' 
-            args '-p 3000:3000' 
-        }
-    }
     stage('Build') {
+        agent {
+            docker {
+                image 'node:16-buster-slim' 
+                args '-p 3000:3000' 
+            }
+        }
         try {
             sh "npm install"
             sh "npm i"
