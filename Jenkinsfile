@@ -6,12 +6,12 @@ node {
                 args '-p 3000:3000' 
             }
         }
-        try {
-            sh "npm install"
-            sh "npm i"
-            echo "finished build process."
-        } catch (exc) {
-            echo 'Something failed!'
+        steps {
+            withNPM(npmrcConfig: 'my-custom-nprc') {
+                sh "npm install"
+                sh "npm i"
+                echo "finished build process."
+            }
         }
     }
     stage('Test') {
