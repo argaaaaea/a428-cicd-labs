@@ -7,7 +7,7 @@ pipeline {
     }
     stages {
         stage('Build') { 
-            steps {
+            step {
                 if (env.BRANCH_NAME == 'react-app') {
                     sh "npm install"
                     sh "npm i"
@@ -16,7 +16,7 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
+            step {
             if (env.BRANCH_NAME == 'react-app') {
                 sh './jenkins/scripts/test.sh'
                 echo "finished test process."
