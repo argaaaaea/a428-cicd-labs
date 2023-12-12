@@ -1,15 +1,19 @@
 node {
     stage('Build') {
-        if (env.BRANCH_NAME == 'react-app') {
+        try {
             sh "npm install"
             sh "npm i"
             echo "finished build process."
+        } catch (exc) {
+            echo 'Something failed!'
         }
     }
     stage('Test') {
-        if (env.BRANCH_NAME == 'react-app') {
+        try {
             sh './jenkins/scripts/test.sh'
             echo "finished test process."
+        } catch (exc) {
+            echo 'Something failed!'
         }
     }
 }
